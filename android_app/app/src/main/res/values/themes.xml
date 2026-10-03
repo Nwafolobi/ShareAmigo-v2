@@ -1,0 +1,23 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme with monochrome styling -->
+    <style name="Theme.SharAmigo.Monochrome" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color (Black & Charcoal) -->
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/charcoal_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        
+        <!-- Secondary brand color (Slate Grey) -->
+        <item name="colorSecondary">@color/grey_dark</item>
+        <item name="colorSecondaryVariant">@color/grey_medium</item>
+        <item name="colorOnSecondary">@color/white</item>
+        
+        <!-- Background & Surface -->
+        <item name="android:colorBackground">@color/grey_ultra_light</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/charcoal_dark</item>
+        
+        <!-- Status Bar & Navigation Bar -->
+        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+    </style>
+</resources>
