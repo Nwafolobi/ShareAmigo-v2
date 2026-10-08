@@ -16,6 +16,7 @@ import com.eduvos.sharamigo.models.Item;
 import com.eduvos.sharamigo.network.ApiClient;
 import com.eduvos.sharamigo.utils.ApiErrors;
 import com.eduvos.sharamigo.utils.SessionManager;
+import com.eduvos.sharamigo.utils.SignOut;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -52,8 +53,12 @@ public class HomeFeedActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_home);
         toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_profile || item.getItemId() == R.id.action_my_listings) {
+                startActivity(new Intent(this, ProfileActivity.class));
+                return true;
+            }
             if (item.getItemId() == R.id.action_logout) {
-                logout();
+                SignOut.run(this);
                 return true;
             }
             return false;
@@ -161,25 +166,4 @@ public class HomeFeedActivity extends AppCompatActivity {
         });
     }
 
-    private void logout() {
-        ApiClient.getService().logout().enqueue(new Callback<Map<String, Object>>() {
-            @Override
-            public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
-                finishLogout();
-            }
-
-            @Override
-            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
-                finishLogout();
-            }
-        });
-    }
-
-    private void finishLogout() {
-        SessionManager.get(this).clear();
-        Intent intent = new Intent(this, AuthActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }
 }

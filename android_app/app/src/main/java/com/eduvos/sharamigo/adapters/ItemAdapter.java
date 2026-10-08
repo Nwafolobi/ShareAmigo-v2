@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.eduvos.sharamigo.R;
 import com.eduvos.sharamigo.activities.ItemDetailActivity;
 import com.eduvos.sharamigo.models.Item;
+import com.eduvos.sharamigo.network.ApiClient;
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
@@ -43,7 +44,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         holder.tvItemDonor.setText("Donor: " + item.getDonorName() + " • " + item.getConditionStatus());
 
         Glide.with(context)
-                .load(item.getPhotoUrl())
+                .load(ApiClient.imageUrl(item.getPhotoUrl()))
                 .placeholder(R.color.grey_light)
                 .into(holder.ivItemPhoto);
 

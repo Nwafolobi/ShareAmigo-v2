@@ -53,7 +53,8 @@ public class ApiClient {
                     .addInterceptor(authInterceptor)
                     .addInterceptor(logging)
                     .connectTimeout(15, TimeUnit.SECONDS)
-                    .readTimeout(15, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS) // photo uploads on slow campus Wi-Fi
                     .build();
 
             retrofit = new Retrofit.Builder()
@@ -63,5 +64,19 @@ public class ApiClient {
                     .build();
         }
         return retrofit.create(ApiService.class);
+    }
+
+    // Photos uploaded by students are stored as paths like "uploads/items/abc.jpg", relative to
+    // the backend folder. Older listings use full web addresses. This returns a loadable address
+    // for either, or null when there is no photo.
+    public static String imageUrl(String path) {
+        if (path == null || path.trim().isEmpty()) {
+            return null;
+        }
+        if (path.startsWith("http://") || path.startsWith("https://")) {
+            return path;
+        }
+        String root = BASE_URL.endsWith("api/") ? BASE_URL.substring(0, BASE_URL.length() - 4) : BASE_URL;
+        return root + (path.startsWith("/") ? path.substring(1) : path);
     }
 }

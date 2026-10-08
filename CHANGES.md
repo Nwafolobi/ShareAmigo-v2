@@ -28,3 +28,41 @@ Until the app sends the token, every call except login and register returns 401.
 - Debug builds allow http. Release builds do not. `allowBackup` is off.
 - Added the files Android Studio needs: settings.gradle, root build.gradle, gradle.properties, wrapper properties, proguard file, app icon.
 - New backend file: `backend/api/transactions/get_handover.php`.
+
+# Profile page and my listings (v3)
+
+## What students can do now
+- **My Profile** (person icon on the home screen): profile picture, name, email, student number, campus, member since, and a short bio.
+- Edit name, student number and bio. Email can't be changed because it proves the student is enrolled.
+- Change password (asks for the current one first).
+- Upload, replace or remove a profile picture.
+- Numbers at a glance: credits (tap to open the wallet), listings on the feed, items given, items received.
+- **My listings**: every listing the student has made, filtered by All / On the feed / Claimed / Exchanged. Edit or delete from the ⋮ menu. Claimed and exchanged listings are locked.
+- **Listings with photos**: add up to 4 photos from the phone's gallery when creating or editing a listing. At least one is required. The first photo is the cover on the feed. Photos are shrunk to about 1280 px before upload to save data.
+- Item detail shows all photos (swipe through them). On your own listing the button becomes **Edit your listing**.
+- The price slider now follows each category's limit (Textbooks 30, Stationery 20, Clothing 20, Food/Meals 15), so the server no longer rejects prices that are too high.
+
+## Backend
+New endpoints, all need `Authorization: Bearer <token>`:
+
+| Endpoint | Method | What it does |
+|---|---|---|
+| `users/get_profile.php` | GET | Profile and stats |
+| `users/update_profile.php` | POST JSON | `full_name`, `student_number`, `bio` |
+| `users/change_password.php` | POST JSON | `current_password`, `new_password` |
+| `users/upload_avatar.php` | POST multipart | `photo`, or `remove=1` |
+| `items/get_my_items.php` | GET | My listings with photos, optional `?status=` |
+| `items/update_item.php` | POST JSON | Edit an available listing |
+| `items/delete_item.php` | POST JSON | `item_id`; marks it Deleted and removes its photos |
+| `items/upload_item_photo.php` | POST multipart | `item_id`, `photo` (max 4 per listing, 5 MB, JPG/PNG/WebP) |
+| `items/delete_item_photo.php` | POST JSON | `photo_id` |
+| `items/get_item_photos.php` | GET | `?item_id=` |
+
+- Photos are checked by their real file contents, saved with random names in `backend/uploads/`, and stored in the database as a path such as `uploads/items/abc.jpg`. The app turns that into a full address from its `BASE_URL`, so the same database works for the emulator and a real phone.
+- `backend/uploads/.htaccess` stops code from running in the uploads folder. Uploaded photos are git-ignored.
+- New shared helpers: `config/uploads.php`, `config/validation.php`.
+
+## Setup
+1. Run `backend/migration_v3.sql` once (adds `users.bio`, `users.avatar_url` and the `item_photos` table).
+2. Make sure the web server can write to `backend/uploads/` (XAMPP on Windows: nothing to do).
+3. Sync Gradle in Android Studio (new libraries: activity, swiperefreshlayout, viewpager2, exifinterface).

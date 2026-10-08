@@ -11,13 +11,33 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Top Image -->
-        <ImageView
-            android:id="@+id/ivDetailPhoto"
+        <!-- Photo gallery: swipe between the listing's photos -->
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="260dp"
-            android:background="@color/grey_light"
-            android:scaleType="centerCrop" />
+            android:layout_height="300dp"
+            android:background="@color/grey_light">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vpDetailPhotos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/tvPhotoCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="12dp"
+                android:background="@drawable/bg_status_dark"
+                android:paddingStart="8dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="3dp"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
