@@ -27,6 +27,15 @@ public class User {
     @SerializedName("role")
     private String role;
 
+    @SerializedName("bio")
+    private String bio;
+
+    @SerializedName("avatar_url")
+    private String avatarUrl;
+
+    @SerializedName("created_at")
+    private String createdAt;
+
     public int getId() { return id; }
     public int getCampusId() { return campusId; }
     public String getCampusName() { return campusName; }
@@ -36,4 +45,8 @@ public class User {
     public int getCreditBalance() { return creditBalance; }
     public void setCreditBalance(int balance) { this.creditBalance = balance; }
     public String getRole() { return role; }
+    public String getBio() { return bio; }
+    public String getAvatarUrl() { return avatarUrl; }
+    public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
+    public String getCreatedAt() { return createdAt; }
 }

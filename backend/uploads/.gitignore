@@ -1,0 +1,4 @@
+# Student photos are data, not code. Keep them out of git.
+*
+!.gitignore
+!.htaccess

@@ -2,6 +2,8 @@ package com.eduvos.sharamigo.models;
 
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Item implements Serializable {
     @SerializedName("id")
@@ -34,6 +36,13 @@ public class Item implements Serializable {
     @SerializedName("photo_url")
     private String photoUrl;
 
+    // Only filled by get_my_items.php. Other screens load photos with get_item_photos.php.
+    @SerializedName("photos")
+    private ArrayList<Photo> photos;
+
+    @SerializedName("created_at")
+    private String createdAt;
+
     public int getId() { return id; }
     public int getListedBy() { return listedBy; }
     public String getDonorName() { return donorName; }
@@ -44,4 +53,6 @@ public class Item implements Serializable {
     public int getCreditCost() { return creditCost; }
     public String getStatus() { return status; }
     public String getPhotoUrl() { return photoUrl; }
+    public List<Photo> getPhotos() { return photos != null ? photos : new ArrayList<>(); }
+    public String getCreatedAt() { return createdAt; }
 }

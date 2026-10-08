@@ -13,6 +13,7 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/tvUploadHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Trade-In a Resource"
@@ -21,6 +22,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tvUploadSubheading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -28,38 +30,33 @@
             android:textColor="@color/grey_dark"
             android:textSize="13sp" />
 
-        <!-- Photo Capture Mockup -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
+        <!-- Photos -->
+        <TextView
+            android:id="@+id/tvPhotosLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="12dp"
-            app:strokeColor="@color/grey_light"
-            app:strokeWidth="1dp">
+            android:text="Photos (0/4)"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Add at least one. The first photo is the cover on the feed. Photos are shrunk before upload to save data."
+            android:textColor="@color/grey_medium"
+            android:textSize="12sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="[ + TAKE ITEM PHOTO ]"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Auto-compressed to 320KB to save student data"
-                    android:textColor="@color/grey_medium"
-                    android:textSize="11sp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPhotos"
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:layout_marginTop="10dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:overScrollMode="never" />
 
         <!-- Title -->
         <com.google.android.material.textfield.TextInputLayout
@@ -77,6 +74,8 @@
                 android:id="@+id/etUploadTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textCapSentences"
+                android:maxLength="150"
                 android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,7 +115,10 @@
                 android:id="@+id/etUploadDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="3"
+                android:gravity="top"
+                android:inputType="textMultiLine|textCapSentences"
+                android:maxLength="2000"
+                android:minLines="3"
                 android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -135,9 +137,9 @@
             android:id="@+id/sliderCreditPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stepSize="5.0"
+            android:stepSize="1.0"
             android:value="15.0"
-            android:valueFrom="5.0"
+            android:valueFrom="1.0"
             android:valueTo="30.0"
             app:thumbColor="@color/black"
             app:trackColorActive="@color/black"
